@@ -8,6 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import it.thefedex87.tracker_data.local.TrackerDatabase
 import it.thefedex87.tracker_data.remote.OpenFoodApi
+import it.thefedex87.tracker_data.repository.TrackerRepositoryImpl
+import it.thefedex87.tracker_domain.repository.TrackerRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -48,5 +50,17 @@ object TrackerDataModule {
             TrackerDatabase::class.java,
             "tracker_db"
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrackerRepository(
+        db: TrackerDatabase,
+        api: OpenFoodApi
+    ): TrackerRepository {
+        return TrackerRepositoryImpl(
+            db.trackedFoodDao,
+            api
+        )
     }
 }
