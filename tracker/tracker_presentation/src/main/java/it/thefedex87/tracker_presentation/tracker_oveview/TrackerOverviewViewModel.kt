@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import it.thefedex87.core.domain.preferences.Preferences
 import it.thefedex87.core.navigation.Route
 import it.thefedex87.core.util.UiEvent
+import it.thefedex87.tracker_domain.use_case.CalculateMealNutrients
 import it.thefedex87.tracker_domain.use_case.TrackerUseCases
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -98,7 +99,7 @@ class TrackerOverviewViewModel @Inject constructor(
                     caloriesGoal = nutrientsResult.caloriesGoal,
                     trackedFoods = foods,
                     meals = state.meals.map {
-                        val nutrientsForMeal =
+                        val nutrientsForMeal: CalculateMealNutrients.MealNutrients =
                             nutrientsResult.mealNutrients[it.mealType]
                                 ?: return@map it.copy(
                                     carbs = 0,

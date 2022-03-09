@@ -1,4 +1,4 @@
-package com.plcoding.calorytracker.ui.theme
+package it.thefedex87.core_ui
 
 import androidx.compose.ui.graphics.Color
 
