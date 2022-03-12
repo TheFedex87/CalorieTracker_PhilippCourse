@@ -22,6 +22,7 @@ import it.thefedex87.onboarding_presentation.height.HeightScreen
 import it.thefedex87.onboarding_presentation.nutrient_goal.NutrientGoalScreen
 import it.thefedex87.onboarding_presentation.weight.WeightScreen
 import it.thefedex87.onboarding_presentation.welcome.WelcomeScreen
+import it.thefedex87.tracker_presentation.tracker_oveview.TrackerOverviewScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -76,7 +77,7 @@ class MainActivity : ComponentActivity() {
                             GoalScreen(onNavigate = navController::navigate)
                         }
                         composable(Route.TRACKER_OVERVIEW) {
-
+                            TrackerOverviewScreen(onNavigate = navController::navigate)
                         }
                         composable(Route.SEARCH) {
 
