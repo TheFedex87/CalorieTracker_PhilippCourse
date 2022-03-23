@@ -6,13 +6,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.annotation.ExperimentalCoilApi
 import it.thefedex87.core.util.UiEvent
 import it.thefedex87.core_ui.LocalSpacing
-import it.thefedex87.tracker_presentation.tracker_oveview.components.DaySelector
-import it.thefedex87.tracker_presentation.tracker_oveview.components.ExpandableMeal
-import it.thefedex87.tracker_presentation.tracker_oveview.components.NutrientsHeader
+import it.thefedex87.core.R
+import it.thefedex87.tracker_presentation.tracker_oveview.components.*
 
+@ExperimentalCoilApi
 @Composable
 fun TrackerOverviewScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
@@ -50,7 +52,35 @@ fun TrackerOverviewScreen(
                     viewModel.onEvent(TrackerOverviewEvent.OnToggleMealClick(meal))
                 },
                 content = {
-
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = spacing.spaceSmall)
+                    ) {
+                        state.trackedFoods.forEach { food ->
+                            TrackedFoodItem(
+                                trackedFood = food,
+                                onDeleteClick = {
+                                    viewModel.onEvent(
+                                        TrackerOverviewEvent.OnDeleteTrackedFoodClick(
+                                            food
+                                        )
+                                    )
+                                }
+                            )
+                            Spacer(modifier = Modifier.height(spacing.spaceMedium))
+                        }
+                        AddButton(
+                            text = stringResource(
+                                id = R.string.add_meal,
+                                meal.name.asString(context)
+                            ),
+                            onClick = {
+                                viewModel.onEvent(TrackerOverviewEvent.OnAddFoodClick(meal))
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 },
                 modifier = Modifier.fillMaxWidth()
             )
