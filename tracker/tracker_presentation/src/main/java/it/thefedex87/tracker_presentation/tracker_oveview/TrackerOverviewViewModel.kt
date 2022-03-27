@@ -41,70 +41,20 @@ class TrackerOverviewViewModel @Inject constructor(
         preferences.saveShouldShowOnboarding(false)
     }
 
-    private var trackedFoods = 1
-
     fun onEvent(event: TrackerOverviewEvent) {
         when (event) {
             is TrackerOverviewEvent.OnAddFoodClick -> {
                 viewModelScope.launch {
-                    if (trackedFoods == 1) {
-                        trackerUseCases.trackFood(
-                            food = TrackableFood(
-                                "Pollo",
-                                imageUrl = null,
-                                caloriesPer100g = 200,
-                                carbsPer100g = 40,
-                                proteinPer100g = 180,
-                                fatPer100g = 90
-                            ),
-                            amount = 120,
-                            event.meal.mealType,
-                            LocalDate.now()
+                    _uiEvent.send(
+                        UiEvent.Navigate(
+                            route = Route.SEARCH
+                                    + "/${event.meal.mealType.name}"
+                                    + "/${state.date.dayOfMonth}"
+                                    + "/${state.date.monthValue}"
+                                    + "/${state.date.year}"
                         )
-                    }
-                    if (trackedFoods == 2) {
-                        trackerUseCases.trackFood(
-                            food = TrackableFood(
-                                "Pasta",
-                                imageUrl = null,
-                                caloriesPer100g = 300,
-                                carbsPer100g = 250,
-                                proteinPer100g = 80,
-                                fatPer100g = 60
-                            ),
-                            amount = 120,
-                            event.meal.mealType,
-                            LocalDate.now()
-                        )
-                    }
-                    if (trackedFoods == 3) {
-                        trackerUseCases.trackFood(
-                            food = TrackableFood(
-                                "Pesce",
-                                imageUrl = null,
-                                caloriesPer100g = 200,
-                                carbsPer100g = 40,
-                                proteinPer100g = 200,
-                                fatPer100g = 110
-                            ),
-                            amount = 140,
-                            event.meal.mealType,
-                            LocalDate.now()
-                        )
-                    }
-                    trackedFoods++
+                    )
                 }
-//                viewModelScope.launch {
-//                    _uiEvent.send(
-//                        UiEvent.Navigate(
-//                            route = Route.SEARCH
-//                                    + "/${event.meal.mealType.name}"
-//                                    + "/${state.date.dayOfMonth}"
-//                                    + "/${state.date.monthValue}"
-//                                    + "/${state.date.year}"
-//                        )
-//                    )
-//                }
             }
             is TrackerOverviewEvent.OnDeleteTrackedFoodClick -> {
                 viewModelScope.launch {
