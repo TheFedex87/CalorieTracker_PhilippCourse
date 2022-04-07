@@ -70,7 +70,7 @@ class SearchViewModel @Inject constructor(
 
     private fun executeSearch() {
         viewModelScope.launch {
-            state.copy(
+            state = state.copy(
                 isSearching = true,
                 trackableFood = emptyList()
             )
