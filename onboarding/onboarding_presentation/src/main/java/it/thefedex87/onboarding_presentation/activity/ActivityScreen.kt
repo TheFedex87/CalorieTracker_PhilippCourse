@@ -15,21 +15,20 @@ import it.thefedex87.core.util.UiEvent
 import it.thefedex87.core_ui.LocalSpacing
 import it.thefedex87.core.R
 import it.thefedex87.core.domain.model.ActivityLevel
-import it.thefedex87.core.domain.model.Gender
 import it.thefedex87.onboarding_presentation.components.ActionButton
 import it.thefedex87.onboarding_presentation.components.SelectableButton
 import kotlinx.coroutines.flow.collect
 
 @Composable
 fun ActivityScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
     viewModel: ActivityViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is UiEvent.Navigate -> onNavigate(event)
+                is UiEvent.Success -> onNextClick()
                 else -> Unit
             }
         }

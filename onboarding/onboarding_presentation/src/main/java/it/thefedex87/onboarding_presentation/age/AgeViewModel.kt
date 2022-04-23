@@ -11,7 +11,6 @@ import it.thefedex87.core.domain.use_case.FilterOutDigits
 import it.thefedex87.core.util.UiEvent
 import it.thefedex87.core.util.UiText
 import it.thefedex87.core.R
-import it.thefedex87.core.navigation.Route
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -46,7 +45,7 @@ class AgeViewModel @Inject constructor(
                 return@launch
             }
             preferences.saveAge(ageNumber)
-            _uiEvent.send(UiEvent.Navigate(Route.HEIGHT))
+            _uiEvent.send(UiEvent.Success)
         }
     }
 }

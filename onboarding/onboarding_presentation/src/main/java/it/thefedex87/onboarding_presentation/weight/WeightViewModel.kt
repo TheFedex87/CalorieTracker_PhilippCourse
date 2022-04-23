@@ -8,8 +8,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import it.thefedex87.core.R
 import it.thefedex87.core.domain.preferences.Preferences
-import it.thefedex87.core.domain.use_case.FilterOutDigits
-import it.thefedex87.core.navigation.Route
 import it.thefedex87.core.util.UiEvent
 import it.thefedex87.core.util.UiText
 import kotlinx.coroutines.channels.Channel
@@ -45,7 +43,7 @@ class WeightViewModel @Inject constructor(
                 return@launch
             }
             preferences.saveWeight(weightNumber)
-            _uiEvent.send(UiEvent.Navigate(Route.ACTIVITY))
+            _uiEvent.send(UiEvent.Success)
         }
     }
 }

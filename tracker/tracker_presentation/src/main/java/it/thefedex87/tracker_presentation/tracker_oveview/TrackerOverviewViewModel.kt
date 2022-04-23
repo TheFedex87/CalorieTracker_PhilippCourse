@@ -7,11 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import it.thefedex87.core.domain.preferences.Preferences
-import it.thefedex87.core.navigation.Route
 import it.thefedex87.core.util.UiEvent
-import it.thefedex87.tracker_domain.model.MealType
-import it.thefedex87.tracker_domain.model.TrackableFood
-import it.thefedex87.tracker_domain.model.TrackedFood
 import it.thefedex87.tracker_domain.use_case.CalculateMealNutrients
 import it.thefedex87.tracker_domain.use_case.TrackerUseCases
 import kotlinx.coroutines.Job
@@ -20,7 +16,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,19 +39,6 @@ class TrackerOverviewViewModel @Inject constructor(
 
     fun onEvent(event: TrackerOverviewEvent) {
         when (event) {
-            is TrackerOverviewEvent.OnAddFoodClick -> {
-                viewModelScope.launch {
-                    _uiEvent.send(
-                        UiEvent.Navigate(
-                            route = Route.SEARCH
-                                    + "/${event.meal.mealType.name}"
-                                    + "/${state.date.dayOfMonth}"
-                                    + "/${state.date.monthValue}"
-                                    + "/${state.date.year}"
-                        )
-                    )
-                }
-            }
             is TrackerOverviewEvent.OnDeleteTrackedFoodClick -> {
                 viewModelScope.launch {
                     trackerUseCases.deleteFood(event.trackedFood)
